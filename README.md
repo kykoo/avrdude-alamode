@@ -1,4 +1,4 @@
-avrdude-alamode
-===============
+avrdude-rpi-mega2560
+====================
 
-fork of avrdude with alamode reset logic as programmer alamode
+fork of avrdude-alamode with Mega2560 reset logic as programmer 
