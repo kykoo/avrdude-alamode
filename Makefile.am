@@ -54,15 +54,15 @@ avrdude_CPPFLAGS = -DCONFIG_DIR=\"$(sysconfdir)\"
 
 libavrdude_a_CPPFLAGS = -DCONFIG_DIR=\"$(sysconfdir)\"
 
-avrdude_CFLAGS   = @ENABLE_WARNINGS@
+avrdude_CFLAGS   = @ENABLE_WARNINGS@ -I/usr/local/include
 
-libavrdude_a_CFLAGS   = @ENABLE_WARNINGS@
+libavrdude_a_CFLAGS   = @ENABLE_WARNINGS@ 
 
-avrdude_LDADD  = $(top_builddir)/$(noinst_LIBRARIES) @LIBUSB@ @LIBUSB_1_0@ @LIBFTDI@ @LIBHID@ -lm
+avrdude_LDADD  = $(top_builddir)/$(noinst_LIBRARIES) @LIBUSB@ @LIBUSB_1_0@ @LIBFTDI@ @LIBHID@ -lm -L/usr/local/lib -lwiringPi
 
 bin_PROGRAMS = avrdude
 
-noinst_LIBRARIES = libavrdude.a
+noinst_LIBRARIES = libavrdude.a 
 
 # automake thinks these generated files should be in the distribution,
 # but this might cause trouble for some users, so we rather don't want
