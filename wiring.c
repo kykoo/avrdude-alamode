@@ -45,12 +45,21 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdint.h>
+#include <wiringPi.h>
 
 #include "avrdude.h"
 #include "pgm.h"
 #include "stk500v2_private.h"
 #include "stk500v2.h"
 #include "serial.h"
+#include "avrdude.h"
+#include "pgm.h"
+#include "stk500_private.h"
+#include "stk500.h"
+#include "serial.h"
+#include "alamode.h"
+
 
 /*
  * Private data for this programmer.
@@ -151,6 +160,7 @@ static int wiring_parseextparms(PROGRAMMER * pgm, LISTID extparms)
 
 static int wiring_open(PROGRAMMER * pgm, char * port)
 {
+
   int timetosnooze;
   void *mycookie = STK500V2PDATA(pgm)->chained_pdata;
 
@@ -181,35 +191,50 @@ static int wiring_open(PROGRAMMER * pgm, char * port)
     /* i.e. both DTR and RTS rise to a HIGH logic level */
     /* since they are active LOW signals.               */
 
-    if (verbose >= 2) {
-      fprintf(stderr,
-              "%s: wiring_open(): releasing DTR/RTS\n",
-              progname);
-    }
+     if (verbose >= 2) {
+       fprintf(stderr,
+               "%s: wiring_open(): releasing DTR/RTS\n",
+               progname);
+     }
+     
+     serial_set_dtr_rts(&pgm->fd, 0);
+     usleep(50*1000);
+     
+     /* After releasing for 50 milliseconds, DTR and RTS */
+     /* are asserted (i.e. logic LOW) again.             */
+     
+     if (verbose >= 2) {
+       fprintf(stderr,
+               "%s: wiring_open(): asserting DTR/RTS\n",
+               progname);
+     }
+     
+     serial_set_dtr_rts(&pgm->fd, 1);
+     usleep(50*1000);
 
-    serial_set_dtr_rts(&pgm->fd, 0);
-    usleep(50*1000);
-
-    /* After releasing for 50 milliseconds, DTR and RTS */
-    /* are asserted (i.e. logic LOW) again.             */
-
-    if (verbose >= 2) {
-      fprintf(stderr,
-              "%s: wiring_open(): asserting DTR/RTS\n",
-              progname);
-    }
-
-    serial_set_dtr_rts(&pgm->fd, 1);
-    usleep(50*1000);
+     
   }
 
   /* drain any extraneous input */
   stk500v2_drain(pgm, 0);
 
-  if (stk500v2_getsync(pgm) < 0)
-    return -1;
+    wiringPiSetupGpio () ;
+    pinMode(18,OUTPUT);
 
-  return 0;
+    printf ("Writing 0 to GPIO Pin18...") ;
+    digitalWrite(18,0);
+    usleep(50*1000);
+    printf (" Done.\n") ;
+
+    printf ("Writing 1 to GPIO Pin18...") ;
+    digitalWrite(18,1);
+    usleep(100*1000);
+    printf (" Done.\n") ; 
+    
+       if (stk500v2_getsync(pgm) < 0)
+         return -1;
+
+    return 0;
 }
 
 static void wiring_close(PROGRAMMER * pgm)
