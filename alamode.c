@@ -269,14 +269,16 @@ static void setup_io()
 } // setup_io
 void alamode_reset(){
   // must use INP_GPIO before OUT_GPIO
-  INP_GPIO(18);
-  OUT_GPIO(18);
+  INP_GPIO(16);
+  OUT_GPIO(16);
 
-  // set GPIO 18 Low
-  GPIO_CLR = 1 << 18;
-  usleep(50*1000);
-  // set GPIO 18 High
-  GPIO_SET = 1 << 18;
+  //  printf("alamode_reset\n");
+  
+  // set GPIO 16 Low
+  GPIO_CLR = 1 << 16;
+  usleep(1000*1000);
+  // set GPIO 16 High
+  GPIO_SET = 1 << 16;
   usleep(50*1000);
 }
 

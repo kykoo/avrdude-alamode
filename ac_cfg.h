@@ -11,10 +11,10 @@
 #define HAVE_GETTIMEOFDAY 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-/* #undef HAVE_INTTYPES_H */
+#define HAVE_INTTYPES_H 1
 
 /* Define if FTDI support is enabled via libftdi */
-/* #undef HAVE_LIBFTDI */
+#define HAVE_LIBFTDI 1
 
 /* Define if HID support is enabled via the Win32 DDK */
 /* #undef HAVE_LIBHID */
@@ -29,13 +29,13 @@
 /* #undef HAVE_LIBTERMCAP */
 
 /* Define if USB support is enabled via libusb */
-/* #undef HAVE_LIBUSB */
+#define HAVE_LIBUSB 1
 
 /* Define if USB support is enabled via a libusb-1.0 compatible libusb */
-/* #undef HAVE_LIBUSB_1_0 */
+#define HAVE_LIBUSB_1_0 1
 
 /* Define to 1 if you have the <libusb-1.0/libusb.h> header file. */
-/* #undef HAVE_LIBUSB_1_0_LIBUSB_H */
+#define HAVE_LIBUSB_1_0_LIBUSB_H 1
 
 /* Define to 1 if you have the <libusb.h> header file. */
 /* #undef HAVE_LIBUSB_H */
@@ -44,7 +44,7 @@
 #define HAVE_LIMITS_H 1
 
 /* Define to 1 if you have the <memory.h> header file. */
-/* #undef HAVE_MEMORY_H */
+#define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `memset' function. */
 #define HAVE_MEMSET 1
@@ -56,7 +56,7 @@
 #define HAVE_SELECT 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
-/* #undef HAVE_STDINT_H */
+#define HAVE_STDINT_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -71,7 +71,7 @@
 #define HAVE_STRERROR 1
 
 /* Define to 1 if you have the <strings.h> header file. */
-/* #undef HAVE_STRINGS_H */
+#define HAVE_STRINGS_H 1
 
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
@@ -89,13 +89,13 @@
 #define HAVE_SYS_IOCTL_H 1
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
-/* #undef HAVE_SYS_STAT_H */
+#define HAVE_SYS_STAT_H 1
 
 /* Define to 1 if you have the <sys/time.h> header file. */
 #define HAVE_SYS_TIME_H 1
 
 /* Define to 1 if you have the <sys/types.h> header file. */
-/* #undef HAVE_SYS_TYPES_H */
+#define HAVE_SYS_TYPES_H 1
 
 /* Define to 1 if you have the <termios.h> header file. */
 #define HAVE_TERMIOS_H 1
@@ -111,9 +111,6 @@
 
 /* Define to 1 if you have the `usleep' function. */
 #define HAVE_USLEEP 1
-
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
 
 /* Name of package */
 #define PACKAGE "avrdude"
@@ -137,7 +134,7 @@
 #define PACKAGE_VERSION "5.11svn-20111019"
 
 /* Define to 1 if you have the ANSI C header files. */
-/* #undef STDC_HEADERS */
+#define STDC_HEADERS 1
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1

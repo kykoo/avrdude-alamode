@@ -165,6 +165,7 @@ static int wiring_open(PROGRAMMER * pgm, char * port)
   void *mycookie = STK500V2PDATA(pgm)->chained_pdata;
 
   strcpy(pgm->port, port);
+  printf("pgm->baudrate=%d\n",pgm->baudrate);
   serial_open(port, pgm->baudrate ? pgm->baudrate: 115200, &pgm->fd);
 
   /* If we have a snoozetime, then we wait and do NOT toggle DTR/RTS */
@@ -219,19 +220,36 @@ static int wiring_open(PROGRAMMER * pgm, char * port)
   stk500v2_drain(pgm, 0);
 
     wiringPiSetupGpio () ;
-    pinMode(18,OUTPUT);
+    pinMode(16,OUTPUT);
 
-    printf ("Writing 0 to GPIO Pin18...") ;
-    digitalWrite(18,0);
-    usleep(50*1000);
+    printf ("Writing 0 to GPIO Pin16 (BCM)...") ;
+    digitalWrite(16,0);
+    usleep(10*1000);
     printf (" Done.\n") ;
-
-    printf ("Writing 1 to GPIO Pin18...") ;
-    digitalWrite(18,1);
+    printf ("Writing 1 to GPIO Pin16 (BCM)...") ;
+    digitalWrite(16,1);
     usleep(100*1000);
     printf (" Done.\n") ; 
     
-       if (stk500v2_getsync(pgm) < 0)
+    printf ("Writing 0 to GPIO Pin16 (BCM)...") ;
+    digitalWrite(16,0);
+    usleep(10*1000);
+    printf (" Done.\n") ;
+    printf ("Writing 1 to GPIO Pin16 (BCM)...") ;
+    digitalWrite(16,1);
+    usleep(100*1000);
+    printf (" Done.\n") ; 
+    
+    printf ("Writing 0 to GPIO Pin16 (BCM)...") ;
+    digitalWrite(16,0);
+    usleep(10*1000);
+    printf (" Done.\n") ;
+    printf ("Writing 1 to GPIO Pin16 (BCM)...") ;
+    digitalWrite(16,1);
+    usleep(1000*1000);
+    printf (" Done.\n") ; 
+    
+    if (stk500v2_getsync(pgm) < 0)
          return -1;
 
     return 0;

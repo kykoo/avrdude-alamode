@@ -437,7 +437,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/pi/avrdude-alamode'
+ac_pwd='/home/pi/codes/avrdude-rpi-mega2560'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -630,12 +630,12 @@ S["DIST_SUBDIRS_AC"]="doc windows"
 S["SUBDIRS_AC"]=""
 S["DOC_INST_DIR"]="$(DESTDIR)$(datadir)/doc/avrdude-$(VERSION)"
 S["LIBHID"]=""
-S["LIBFTDI"]=""
-S["LIBUSB_1_0"]=""
-S["EGREP"]=""
-S["GREP"]=""
-S["CPP"]=""
-S["LIBUSB"]=""
+S["LIBFTDI"]="-lftdi -lusb"
+S["LIBUSB_1_0"]="-lusb-1.0"
+S["EGREP"]="/bin/grep -E"
+S["GREP"]="/bin/grep"
+S["CPP"]="gcc -E"
+S["LIBUSB"]="-lusb"
 S["RANLIB"]="ranlib"
 S["LEXLIB"]="-lfl"
 S["LEX_OUTPUT_ROOT"]="lex.yy"
@@ -659,22 +659,26 @@ S["CPPFLAGS"]=""
 S["LDFLAGS"]=""
 S["CFLAGS"]="-g -O2"
 S["CC"]="gcc"
+S["AM_BACKSLASH"]="\\"
+S["AM_DEFAULT_VERBOSITY"]="1"
+S["AM_DEFAULT_V"]="$(AM_DEFAULT_VERBOSITY)"
+S["AM_V"]="$(V)"
 S["am__untar"]="$${TAR-tar} xf -"
 S["am__tar"]="$${TAR-tar} chof - \"$$tardir\""
 S["AMTAR"]="$${TAR-tar}"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
 S["AWK"]="mawk"
-S["mkdir_p"]="/bin/mkdir -p"
+S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="${SHELL} /home/pi/avrdude-alamode/install-sh"
-S["MAKEINFO"]="${SHELL} /home/pi/avrdude-alamode/missing --run makeinfo"
-S["AUTOHEADER"]="${SHELL} /home/pi/avrdude-alamode/missing --run autoheader"
-S["AUTOMAKE"]="${SHELL} /home/pi/avrdude-alamode/missing --run automake-1.11"
-S["AUTOCONF"]="${SHELL} /home/pi/avrdude-alamode/missing --run autoconf"
-S["ACLOCAL"]="${SHELL} /home/pi/avrdude-alamode/missing --run aclocal-1.11"
+S["install_sh"]="${SHELL} /home/pi/codes/avrdude-rpi-mega2560/install-sh"
+S["MAKEINFO"]="makeinfo"
+S["AUTOHEADER"]="autoheader"
+S["AUTOMAKE"]="automake-1.14"
+S["AUTOCONF"]="autoconf"
+S["ACLOCAL"]="aclocal-1.14"
 S["VERSION"]="5.11svn-20111019"
 S["PACKAGE"]="avrdude"
 S["CYGPATH_W"]="echo"
@@ -684,16 +688,16 @@ S["INSTALL_SCRIPT"]="${INSTALL}"
 S["INSTALL_PROGRAM"]="${INSTALL}"
 S["target_os"]="linux-gnu"
 S["target_vendor"]="unknown"
-S["target_cpu"]="armv6l"
-S["target"]="armv6l-unknown-linux-gnu"
+S["target_cpu"]="armv7l"
+S["target"]="armv7l-unknown-linux-gnu"
 S["host_os"]="linux-gnu"
 S["host_vendor"]="unknown"
-S["host_cpu"]="armv6l"
-S["host"]="armv6l-unknown-linux-gnu"
+S["host_cpu"]="armv7l"
+S["host"]="armv7l-unknown-linux-gnu"
 S["build_os"]="linux-gnu"
 S["build_vendor"]="unknown"
-S["build_cpu"]="armv6l"
-S["build"]="armv6l-unknown-linux-gnu"
+S["build_cpu"]="armv7l"
+S["build"]="armv7l-unknown-linux-gnu"
 S["target_alias"]=""
 S["host_alias"]=""
 S["build_alias"]=""
@@ -782,6 +786,21 @@ D["PACKAGE_URL"]=" \"\""
 D["PACKAGE"]=" \"avrdude\""
 D["VERSION"]=" \"5.11svn-20111019\""
 D["YYTEXT_POINTER"]=" 1"
+D["HAVE_LIBUSB"]=" 1"
+D["HAVE_LIBUSB_1_0"]=" 1"
+D["STDC_HEADERS"]=" 1"
+D["HAVE_SYS_TYPES_H"]=" 1"
+D["HAVE_SYS_STAT_H"]=" 1"
+D["HAVE_STDLIB_H"]=" 1"
+D["HAVE_STRING_H"]=" 1"
+D["HAVE_MEMORY_H"]=" 1"
+D["HAVE_STRINGS_H"]=" 1"
+D["HAVE_INTTYPES_H"]=" 1"
+D["HAVE_STDINT_H"]=" 1"
+D["HAVE_UNISTD_H"]=" 1"
+D["HAVE_LIBUSB_1_0_LIBUSB_H"]=" 1"
+D["HAVE_LIBUSB_1_0"]=" 1"
+D["HAVE_LIBFTDI"]=" 1"
 D["HAVE_LIMITS_H"]=" 1"
 D["HAVE_STDLIB_H"]=" 1"
 D["HAVE_STRING_H"]=" 1"
@@ -1125,7 +1144,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
   case $ac_file$ac_mode in
     "depfiles":C) test x"$AMDEP_TRUE" != x"" || {
-  # Autoconf 2.62 quotes --file arguments for eval, but not when files
+  # Older Autoconf quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval
   # if we detect the quoting.
   case $CONFIG_FILES in
@@ -1138,7 +1157,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
     # Strip MF so we end up with the name of the file.
     mf=`echo "$mf" | sed -e 's/:.*$//'`
     # Check whether this is an Automake generated Makefile or not.
-    # We used to match only the files named `Makefile.in', but
+    # We used to match only the files named 'Makefile.in', but
     # some people rename them; so instead we look at the file content.
     # Grep'ing the first line is not enough: some people post-process
     # each Makefile.in and add a new line on top of each file to say so.
@@ -1172,21 +1191,19 @@ $as_echo X"$mf" |
       continue
     fi
     # Extract the definition of DEPDIR, am__include, and am__quote
-    # from the Makefile without running `make'.
+    # from the Makefile without running 'make'.
     DEPDIR=`sed -n 's/^DEPDIR = //p' < "$mf"`
     test -z "$DEPDIR" && continue
     am__include=`sed -n 's/^am__include = //p' < "$mf"`
-    test -z "am__include" && continue
+    test -z "$am__include" && continue
     am__quote=`sed -n 's/^am__quote = //p' < "$mf"`
-    # When using ansi2knr, U may be empty or an underscore; expand it
-    U=`sed -n 's/^U = //p' < "$mf"`
     # Find all dependency output files, they are included files with
     # $(DEPDIR) in their names.  We invoke sed twice because it is the
     # simplest approach to changing $(DEPDIR) to its actual value in the
     # expansion.
     for file in `sed -n "
       s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
-	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g' -e 's/\$U/'"$U"'/g'`; do
+	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g'`; do
       # Make sure the directory exists.
       test -f "$dirpart/$file" && continue
       fdir=`$as_dirname -- "$file" ||
