@@ -125,6 +125,36 @@ static int ser_setspeed(union filedescriptor *fd, long baud)
   termios.c_cc[VMIN]  = 1;
   termios.c_cc[VTIME] = 0;
 
+
+  //------------------------------------------------
+  // MY MODIFICATION START
+  printf("ser_setspeed: speed=%ld\n",speed);
+
+//   /* Custom divisor */
+//   termios.reserved_char[0] = 0;
+//   if (ioctl(fd, TIOCGSERIAL, &termios) < 0)
+//     return -1;
+//   termios.flags &= ~ASYNC_SPD_MASK;
+//   termios.flags |= ASYNC_SPD_CUST;
+//   termios.custom_divisor = (termios.baud_base + (rate / 2)) / rate;
+//   if (termios.custom_divisor < 1)
+//     termios.custom_divisor = 1;
+//   if (ioctl(fd, TIOCSSERIAL, &termios) < 0)
+//     return -1;
+//   if (ioctl(fd, TIOCGSERIAL, &termios) < 0)
+//     return -1;
+//   if (termios.custom_divisor * rate != termios.baud_base) {
+//     warnx("actual baudrate is %d / %d = %f",
+// 	  termios.baud_base, termios.custom_divisor,
+// 	  (float)termios.baud_base / termios.custom_divisor);
+//   }
+//   speed = B38400;
+//   fcntl(fd, F_SETFL, 0);
+//   tcgetattr(fd, &options);
+//   // ENDS
+  //---------------------------------------------------
+
+  
   cfsetospeed(&termios, speed);
   cfsetispeed(&termios, speed);
 
